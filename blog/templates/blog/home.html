@@ -1,2 +1,10 @@
-<h1>Welcome"{{title}}"</h1>
-<p>very Nice, Very Very Clean</p>
+{% extends 'blog/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="text-center">
+  <h1>Welcome to {{ title }}</h1><br>
+  <p>Welcome to my website!</p>
+</div>
+{% endblock %}

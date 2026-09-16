@@ -1,2 +1,10 @@
-<h1>About {{ content }}</h1>
-<p>This is a Simple blog application</p>
+{% extends 'blog/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="text-center">
+  <h1>About {{ title }}</h1><br>
+  <p>We are a community</p>
+</div>
+{% endblock %}
