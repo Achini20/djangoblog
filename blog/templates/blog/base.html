@@ -16,7 +16,19 @@
             <a class="nav-link" href="{% url 'about' %}">About</a>
             <a class="nav-link" href="{% url 'contact' %}">Contact</a>
         </div>
-        <a class="btn btn-outline-light btn-sm ms-auto" href="{% url 'post_create' %}">New Post</a>
+        <div class="ms-auto d-flex align-items-center gap-2">
+            {% if request.user.is_authenticated %}
+                <a class="btn btn-outline-light btn-sm" href="{% url 'post_create' %}">New Post</a>
+                <span class="text-white ms-2">Hi, {{ request.user.username }}</span>
+                <form method="post" action="{% url 'logout' %}" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
+                </form>
+            {% else %}
+                <a class="btn btn-outline-light btn-sm" href="{% url 'login' %}">Login</a>
+                <a class="btn btn-outline-light btn-sm" href="{% url 'register' %}">Register</a>
+            {% endif %}
+        </div>
     </nav>
 
     <div class="container mt-4">

@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator
+from django.contrib.auth import login
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import Post, Category
-from .forms import PostForm
+from .forms import PostForm, RegisterForm
 
 
 def home(request):
@@ -65,3 +66,14 @@ class PostDeleteView(DeleteView):
     model = Post
     template_name = "blog/post_confirm_delete.html"
     success_url = reverse_lazy("home")
+
+
+class RegisterView(CreateView):
+    form_class = RegisterForm
+    template_name = "blog/register.html"
+    success_url = "/"
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        login(self.request, self.object)
+        return response
