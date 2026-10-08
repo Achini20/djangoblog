@@ -18,6 +18,22 @@
       {% endif %}
     </div>
   {% endfor %}
+
+  <div class="mb-3">
+    <img id="preview" style="max-width:200px; display:none;" class="rounded">
+  </div>
+
   <button type="submit" class="btn btn-success">Save</button>
 </form>
+
+<script>
+  const fileInput = document.querySelector('input[type="file"]');
+  if (fileInput) {
+    fileInput.addEventListener('change', function(event) {
+      const preview = document.getElementById('preview');
+      preview.src = URL.createObjectURL(event.target.files[0]);
+      preview.style.display = 'block';
+    });
+  }
+</script>
 {% endblock %}

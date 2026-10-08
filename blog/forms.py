@@ -20,6 +20,16 @@ class PostForm(forms.ModelForm):
             raise forms.ValidationError("Title must be at least 5 characters long.")
         return title
 
+    def clean_image(self):
+        image = self.cleaned_data.get("image")
+        if image:
+            if image.size > 5 * 1024 * 1024:
+                raise forms.ValidationError("Image file too large ( max 5MB ).")
+            valid_extensions = [".jpg", ".jpeg", ".png", ".webp"]
+            if not any(image.name.lower().endswith(ext) for ext in valid_extensions):
+                raise forms.ValidationError("Unsupported file type. Use JPG, PNG, or WEBP.")
+        return image
+
     def clean(self):
         cleaned_data = super().clean()
         title = cleaned_data.get("title")
