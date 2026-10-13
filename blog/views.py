@@ -1,12 +1,14 @@
-from django.shortcuts import render, get_object_or_404
-from django.core.paginator import Paginator
+from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.paginator import Paginator
+from django.db.models import Q
+from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
-from .models import Post, Category
 from .forms import PostForm, RegisterForm
+from .models import Post, Category
 
 
 def home(request):
@@ -34,7 +36,11 @@ def home(request):
 
 
 def post_detail(request, slug):
-    post = get_object_or_404(Post, slug=slug, status='published')
+    if request.user.is_authenticated:
+        queryset = Post.objects.filter(Q(status='published') | Q(author=request.user))
+    else:
+        queryset = Post.objects.filter(status='published')
+    post = get_object_or_404(queryset, slug=slug)
     return render(request, 'blog/post_detail.html', {'post': post})
 
 
@@ -46,6 +52,10 @@ def contact(request):
     return render(request, 'blog/contact.html')
 
 
+def custom_403(request, exception=None):
+    return render(request, "blog/403.html", status=403)
+
+
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
@@ -54,6 +64,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+        messages.success(self.request, "Post published successfully!")
         return super().form_valid(form)
 
     def get_success_url(self):
