@@ -14,16 +14,22 @@ from .models import Post, Category
 def home(request):
     post_list = (
         Post.objects.filter(status='published')
-        .select_related('category')
+        .select_related('category', 'author')
         .prefetch_related('tags')
         .order_by('-created_at')
     )
 
     categories = Category.objects.all()
     selected_category = request.GET.get('category')
+    query = request.GET.get('q', '').strip()
 
     if selected_category:
         post_list = post_list.filter(category__name=selected_category)
+
+    if query:
+        post_list = post_list.filter(
+            Q(title__icontains=query) | Q(content__icontains=query)
+        )
 
     paginator = Paginator(post_list, 6)
     posts = paginator.get_page(request.GET.get('page'))
@@ -32,6 +38,7 @@ def home(request):
         'posts': posts,
         'categories': categories,
         'selected_category': selected_category,
+        'query': query,
     })
 
 

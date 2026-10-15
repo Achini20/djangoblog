@@ -6,11 +6,19 @@
 <div class="container">
     <h1 class="text-center">Welcome to My Blog</h1>
 
+    <form method="get" class="d-flex justify-content-center my-3">
+        {% if selected_category %}
+            <input type="hidden" name="category" value="{{ selected_category }}">
+        {% endif %}
+        <input type="text" name="q" value="{{ query }}" class="form-control w-50 me-2" placeholder="Search posts...">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+
     <div class="row">
         {% for post in posts %}
             {% include "blog/partials/_post_card.html" %}
         {% empty %}
-            <p class="text-center">No posts found in this category.</p>
+            <p class="text-center">No posts found.</p>
         {% endfor %}
     </div>
 
@@ -19,7 +27,7 @@
         <ul class="pagination justify-content-center">
             {% if posts.has_previous %}
             <li class="page-item">
-                <a class="page-link" href="?page={{ posts.previous_page_number }}{% if selected_category %}&category={{ selected_category|urlencode }}{% endif %}">Previous</a>
+                <a class="page-link" href="?page={{ posts.previous_page_number }}{% if selected_category %}&category={{ selected_category|urlencode }}{% endif %}{% if query %}&q={{ query|urlencode }}{% endif %}">Previous</a>
             </li>
             {% endif %}
 
@@ -29,7 +37,7 @@
 
             {% if posts.has_next %}
             <li class="page-item">
-                <a class="page-link" href="?page={{ posts.next_page_number }}{% if selected_category %}&category={{ selected_category|urlencode }}{% endif %}">Next</a>
+                <a class="page-link" href="?page={{ posts.next_page_number }}{% if selected_category %}&category={{ selected_category|urlencode }}{% endif %}{% if query %}&q={{ query|urlencode }}{% endif %}">Next</a>
             </li>
             {% endif %}
         </ul>
@@ -50,7 +58,7 @@
                 All
             </a>
             {% for cat in categories %}
-                <a href="?category={{ cat.name|urlencode }}#browse"
+                <a href="?category={{ cat.name|urlencode }}{% if query %}&q={{ query|urlencode }}{% endif %}#browse"
                    class="btn btn-sm {% if selected_category == cat.name %}btn-primary{% else %}btn-outline-primary{% endif %}">
                     {{ cat.name }}
                 </a>
