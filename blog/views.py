@@ -56,8 +56,7 @@ def about(request):
 
 
 def contact(request):
-    return render(request, 'blog/contact.html')
-
+   raise Exception("test 500")
 
 def custom_403(request, exception=None):
     return render(request, "blog/403.html", status=403)
