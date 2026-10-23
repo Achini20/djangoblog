@@ -1,11 +1,16 @@
 {% extends 'blog/base.html' %}
+{% load static %}
 
 {% block title %}Home{% endblock %}
 
 {% block content %}
 <div class="container">
-    <h1 class="text-center hero-title">Ceylon Notes</h1>
-    <p class="text-center text-muted hero-subtitle">Stories, food and everyday life from Sri Lanka</p>
+    <div class="hero-banner">
+        <div class="hero-overlay">
+            <h1 class="hero-title-white">Ceylon Notes</h1>
+            <p class="hero-subtitle-white">Stories, food and everyday life from Sri Lanka</p>
+        </div>
+    </div>
 
     <form method="get" class="d-flex justify-content-center my-3">
         {% if selected_category %}
@@ -44,7 +49,7 @@
         </ul>
     </nav>
     {% endif %}
-
+    
     <div class="text-center my-4" id="browse">
         <button class="btn btn-dark px-4" type="button"
                 data-bs-toggle="collapse" data-bs-target="#categoryList"
