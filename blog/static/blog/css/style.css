@@ -1,10 +1,7 @@
 body {
     background:
-        radial-gradient(circle at 15% 20%, rgba(76, 175, 80, 0.25) 0, transparent 45%),
-        radial-gradient(circle at 85% 30%, rgba(255, 193, 7, 0.25) 0, transparent 45%),
-        radial-gradient(circle at 50% 90%, rgba(33, 150, 243, 0.25) 0, transparent 50%),
-        #f8fbff;
-    background-attachment: fixed;
+        linear-gradient(rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.55)),
+        url("../elephant.jpg") center / cover no-repeat fixed;
     min-height: 100vh;
 }
 
