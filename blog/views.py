@@ -56,10 +56,15 @@ def about(request):
 
 
 def contact(request):
-   raise Exception("test 500")
+    return render(request, 'blog/contact.html')
+
 
 def custom_403(request, exception=None):
     return render(request, "blog/403.html", status=403)
+
+
+def error_505(request):
+    return render(request, "505.html", status=505)
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -75,7 +80,6 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
     def get_success_url(self):
         return reverse_lazy("post_detail", kwargs={"slug": self.object.slug})
-
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post

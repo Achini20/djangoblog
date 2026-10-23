@@ -10,3 +10,17 @@ body{
     height: 200px;
     object-fit: cover;
 }
+.hero-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #1f3a68, #0d6efd);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 4px;
+}
+
+.hero-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}

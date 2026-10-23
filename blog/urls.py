@@ -5,6 +5,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
+    path('error-505/', views.error_505, name='error_505'),
     path('register/', views.RegisterView.as_view(), name='register'),
     path('my-posts/', views.MyPostsView.as_view(), name='my_posts'),
     path('post/new/', views.PostCreateView.as_view(), name='post_create'),
